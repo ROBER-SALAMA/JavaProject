@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package sysseguridad.entidadesdenegocio;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 /**
  *
@@ -17,6 +18,9 @@ public class Cita {
     private String Direccion;
     private String Propietario;
     private String TipoCita;
+    private int top_aux;  // Agregar el atributo top_aux
+    private Mascota mascota;
+    private byte estatus;
 
     public Cita() {
     }
@@ -94,6 +98,46 @@ public class Cita {
 
     public void setTipoCita(String TipoCita) {
         this.TipoCita = TipoCita;
+    }
+    
+    public int getTop_aux(){
+        return top_aux;
+    }
+    
+    public void setTop_aux(int top_aux) {
+        this.top_aux = top_aux;
+    }
+    
+    private static void asignarDatosResultSet(Cita cita, ResultSet resultSet, int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public Mascota getMascota() {
+        return mascota;
+    }
+
+    public void setRol(Mascota mascota) {
+        this.mascota = mascota;
+    }
+
+    public void setMascota(Mascota mascota) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+//    public void setMascota(Mascota get) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
+//
+//    public void setMascota(Mascota get) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
+    
+    public byte getEstatus() {
+        return estatus;
+    }
+    
+    public void setEstatus(byte estatus) {
+        this.estatus = estatus;
     }
     
     
