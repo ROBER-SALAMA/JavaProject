@@ -105,6 +105,12 @@ public class Mascota {
     public void setPropietario(String Propietario) {
         this.Propietario = Propietario;
     }      
+
+    public static void setUsuario(Usuario get) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+
 }
 
 
