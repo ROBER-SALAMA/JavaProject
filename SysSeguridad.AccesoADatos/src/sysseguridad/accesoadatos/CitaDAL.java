@@ -2,6 +2,7 @@ package sysseguridad.accesoadatos;
 
 import java.util.*;
 import java.sql.*;
+import java.time.LocalDate;
 import static sysseguridad.accesoadatos.UsuarioDAL.encriptarMD5;
 import static sysseguridad.accesoadatos.UsuarioDAL.obtenerCampos;
 import static sysseguridad.accesoadatos.UsuarioDAL.querySelect;
@@ -39,35 +40,76 @@ public class CitaDAL {
         }
         return sql;
     }
-
+    
     //metodo para verificar si existe mascota
-    private static boolean existeCita(Cita pCita) throws Exception {
+   private static boolean existeMAscota(Cita pCita) throws Exception {
         boolean existe = false;
-        ArrayList<Cita> Citas = new ArrayList<>();
-        try (Connection conn = ComunDB.obtenerConexion()) {
-            String sql = obtenerSelect(pCita);
-            sql += " WHERE u.Id <> ? AND u.Propietario = ?"; // Corregir el WHERE para comparar con el propietario de la cita
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, pCita.getId());
-                ps.setString(2, pCita.getPropietario());
-                obtenerDatos(ps, Citas);
+        ArrayList<Cita> citas = new ArrayList<>();
+        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+            String sql = obtenerSelect(pCita);  // Obtener la consulta SELECT de la tabla Usuario
+            // Concatenar a la consulta SELECT de la tabla Usuario el WHERE y el filtro para saber si existe el login
+            sql += " WHERE u.Id<>? AND u.Login=?";
+            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
+                ps.setInt(1, pCita.getId());  // Agregar el parametros a la consulta donde estan el simbolo ? #1 
+                ps.setString(2, pCita.getPropietario());  // Agregar el parametros a la consulta donde estan el simbolo ? #2 
+                obtenerDatos(ps, citas); // Llenar el ArrayList de USuario con las fila que devolvera la consulta SELECT a la tabla de Usuario
+                ps.close(); // Cerrar el PreparedStatement
             } catch (SQLException ex) {
-                throw ex;
+                throw ex;  // Enviar al siguiente metodo el error al ejecutar PreparedStatement el en el caso que suceda
             }
-        } catch (SQLException ex) {
-            throw ex;
+            conn.close(); // Cerrar la conexion a la base de datos
         }
-
-        if (Citas.size() > 0) {
-            Cita cita = Citas.get(0);
-            if (cita.getId() > 0 && cita.getPropietario().equals(pCita.getPropietario())) {
+        catch (SQLException ex) {
+            throw ex; // Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
+        }
+        if (citas.size() > 0) { // Verificar si el ArrayList de Usuario trae mas de un registro en tal caso solo debe de traer uno
+            Cita cita;
+             // Se solucciono tenia valor de 1 cuando debe de ser cero
+            cita = citas.get(0); // Si el ArrayList de Usuario trae un registro o mas obtenemos solo el primero 
+            if (cita.getId() > 0 && cita.getDiagnostico().equals(pCita.getIdMascota())) {
+                // Si el Id de Usuario es mayor a cero y el Login que se busco en la tabla de Usuario es igual al que solicitamos
+                // en los parametros significa que el login ya existe en la base de datos y devolvemos true en la variable "existe"
                 existe = true;
             }
         }
+        return existe; //Devolver la variable "existe" con el valor true o false si existe o no el Login en la tabla de Usuario de la base de datos
 
-        return existe;
     }
-
+  
+    // Metodo para poder insertar un nuevo registro en la tabla de Usuario
+    public static int crear(Cita pCita) throws Exception {
+        int result;
+        String sql;
+        boolean existe = existeMAscota(pCita); // verificar si el usuario que se va a crear ya existe en nuestra base de datos
+        if (existe == false) {
+            try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+                 //Definir la consulta INSERT a la tabla de Usuario utilizando el simbolo "?" para enviar parametros
+                sql = "INSERT INTO Usuario(IdRol,Nombre,Apellido,Login,Password,Estatus,FechaRegistro) VALUES(?,?,?,?,?,?,?)";
+                try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
+                    ps.setInt(1, pCita.getId()); // Agregar el parametro a la consulta donde estan el simbolo "?" #1  
+                    ps.setString(2, pCita.getDiagnostico()); // Agregar el parametro a la consulta donde estan el simbolo "?" #2 
+                    ps.setString(3, pCita.getDireccion()); // agregar el parametro a la consulta donde estan el simbolo "?" #3 
+                    ps.setString(4, pCita.getTipoCita()); // agregar el parametro a la consulta donde estan el simbolo "?" #4 
+                    
+                    ps.setByte(5, pCita.getEstatus()); // agregar el parametro a la consulta donde estan el simbolo "?" #6 
+                    ps.setDate(6, java.sql.Date.valueOf(LocalDate.now())); // agregar el parametro a la consulta donde estan el simbolo "?" #7 
+                    result = ps.executeUpdate(); // ejecutar la consulta INSERT en la base de datos
+                    ps.close(); // cerrar el PreparedStatement
+                } catch (SQLException ex) {
+                    throw ex; // enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda 
+                }
+                conn.close();
+            } // Handle any errors that may have occurred.
+            catch (SQLException ex) {
+                throw ex; // enviar al siguiente metodo el error al obtener la conexion en el caso que suceda
+            }
+        } else {
+            result = 0;
+            throw new RuntimeException("Login ya existe"); // enviar una exception para notificar que el login existe
+        }
+        return result; // Retornar el numero de fila afectadas en el INSERT en la base de datos 
+    }
+    
     // Metodo para ejecutar el ResultSet de la consulta SELECT a la tabla de cita
     private static void obtenerDatos(PreparedStatement pPS, ArrayList<Cita> pCitas) throws Exception {
         try (ResultSet resultSet = ComunDB.obtenerResultSet(pPS)) { // obtener el ResultSet desde la clase ComunDB
@@ -104,74 +146,42 @@ public class CitaDAL {
         return pIndex;
     }
 
-    // Metodo para poder insertar un nuevo registro en la tabla de cita
-    public static int crear(Cita pCita) throws Exception {
-        int result;
-        String sql;
-        boolean existe = existeCita(pCita); // verificar si el usuario que se va a crear ya existe en nuestra base de datos
-        if (existe == false) {
-            try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-                //Definir la consulta INSERT a la tabla de Usuario utilizando el simbolo "?" para enviar parametros
-                sql = "INSERT INTO Cita(IdMascota,IdUsuario,Fecha,Diagnostico,Direccion,Propietario,TipoCita) VALUES(?,?,?,?,?,?,?)";
-                try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
-                    // Configurar los parámetros del PreparedStatement
-                    ps.setInt(1, pCita.getIdMascota());
-                    ps.setInt(2, pCita.getIdUsuario());
-                    ps.setString(3, pCita.getFecha());
-                    ps.setString(4, pCita.getDiagnostico());
-                    ps.setString(5, pCita.getDireccion());
-                    ps.setString(6, pCita.getPropietario());
-                    ps.setByte(7, Byte.parseByte(pCita.getTipoCita())); // agregar el parametro a la consulta donde estan el simbolo "?" #7 
-                    result = ps.executeUpdate(); // ejecutar la consulta INSERT en la base de datos
-                    ps.close(); // cerrar el PreparedStatement
-                } catch (SQLException ex) {
-                    throw ex; // enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda 
-                }
-                conn.close();
-            } // Handle any errors that may have occurred.
-            catch (SQLException ex) {
-                throw ex; // enviar al siguiente metodo el error al obtener la conexion en el caso que suceda
-            }
-        } else {
-            result = 0;
-            throw new RuntimeException("cita ya existe ya existe"); // enviar una exception para notificar que el login existe
-        }
-        return result; // Retornar el numero de fila afectadas en el INSERT en la base de datos 
-    }
-
-    // Metodo para poder actualizar un registro en la tabla de Usuario
-    public static int modificar(Cita pCita) throws Exception {
-        int result;
-        String sql;
-        boolean existe = existeCita(pCita); // verificar si el usuario que se va a modificar ya existe en nuestra base de datos
-        if (existe == false) {
-            try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-                //Definir la consulta UPDATE a la tabla de Usuario utilizando el simbolo ? para enviar parametros
-                sql = "UPDATE Cita SET IdMascota=?, IdUsuario=?, Fecha=?, Diagnostico=?, Direccion=?, Propietario=?, TipoCita=? WHERE Id=?";
-                try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // obtener el PreparedStatement desde la clase ComunDB
-                    ps.setInt(1, pCita.getIdMascota());
-                    ps.setInt(2, pCita.getIdUsuario());
-                    ps.setString(3, pCita.getFecha());
-                    ps.setString(4, pCita.getDiagnostico());
-                    ps.setString(5, pCita.getDireccion());
-                    ps.setString(6, pCita.getPropietario());
-                    ps.setByte(7, Byte.parseByte(pCita.getTipoCita())); // Asumiendo que el tipo de cita se puede parsear a byte
-                    ps.setInt(8, pCita.getId()); // Agregar el parámetro para el WHERE clause
-                    result = ps.executeUpdate(); // ejecutar la consulta UPDATE en la base de datos
-                    ps.close(); // cerrar el PreparedStatement
-                } catch (SQLException ex) {
-                    throw ex; // enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda 
-                }
-                conn.close(); // cerrar la conexion a la base de datos
+    // Metodo para poder actualizar un registro en la tabla de cita
+   // Metodo para poder actualizar un registro en la tabla de cita
+public static int modificar(Cita pCita) throws Exception {
+    int result;
+    String sql;
+    
+//        boolean existe = existeMascota(pCita);
+    
+//    if (!existe) {
+        try (Connection conn = ComunDB.obtenerConexion()) {
+            sql = "UPDATE Cita SET IdMascota=?, IdUsuario=?, Fecha=?, Diagnostico=?, Direccion=?, Propietario=?, TipoCita=? WHERE Id=?";
+            
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, pCita.getIdMascota());
+                ps.setInt(2, pCita.getIdUsuario());
+                ps.setString(3, pCita.getFecha());
+                ps.setString(4, pCita.getDiagnostico());
+                ps.setString(5, pCita.getDireccion());
+                ps.setString(6, pCita.getPropietario());
+                ps.setByte(7, Byte.parseByte(pCita.getTipoCita()));
+                ps.setInt(8, pCita.getId());
+                
+                result = ps.executeUpdate();
             } catch (SQLException ex) {
-                throw ex; // enviar al siguiente metodo el error al obtener la conexion en el caso que suceda 
+                throw ex;
             }
-        } else {
-            result = 0;
-            throw new RuntimeException("Cita  ya existe"); // enviar una exception para notificar que el login existe
+        } catch (SQLException ex) {
+            throw ex;
         }
-        return result; // Retornar el numero de fila afectadas en el UPDATE en la base de datos 
-    }
+//    } else {
+//        throw new RuntimeException("Cita ya existe");
+//    }
+    
+    return result;
+}
+
 
     // Método para poder eliminar un registro en la tabla de Cita
     public static int eliminar(Cita pCita) throws SQLException {
@@ -213,18 +223,6 @@ public class CitaDAL {
         return pIndex;
     }
 
-// Metodo para ejecutar el ResultSet de la consulta SELECT a la tabla de Cita
-    private static void obtenerDatos(PreparedStatement pPS, ArrayList<Cita> pCitas) throws Exception {
-        try (ResultSet resultSet = ComunDB.obtenerResultSet(pPS)) {
-            while (resultSet.next()) {
-                Cita cita = new Cita();
-                asignarDatosResultSet(cita, resultSet, 0);
-                pCitas.add(cita);
-            }
-        } catch (SQLException ex) {
-            throw ex;
-        }
-    }
 
 // Metodo para ejecutar el ResultSet de la consulta SELECT a la tabla de Usuario y JOIN a la tabla de mascota
     private static void obtenerDatosIncluirMascota(PreparedStatement pPS, ArrayList<Cita> pcitas) throws Exception {
@@ -249,32 +247,34 @@ public class CitaDAL {
         } catch (SQLException ex) {
             throw ex;
         }
+    }
         // Metodo para obtener por Id un registro de la tabla de Cita 
 
         // Metodo para obtener por Id un registro de la tabla de Cita 
 public static Cita obtenerPorId(Cita pCita) throws Exception {
-        Cita cita = null;
-        ArrayList<Cita> citas = new ArrayList<>();
-        try (Connection conn = ComunDB.obtenerConexion()) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-            String sql = obtenerSelect(pCita); // obtener la consulta SELECT de la tabla Cita
-            // Concatenar a la consulta SELECT de la tabla Cita el WHERE para comparar el campo Id
-            sql += " WHERE c.Id=?";
-            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql)) { // obtener el PreparedStatement desde la clase ComunDB
-                ps.setInt(1, pCita.getId()); // agregar el parametro a la consulta donde estan el simbolo ? #1 
-                obtenerDatos(ps, citas); // Llenar el ArrayList de Cita con las filas que devolverá la consulta SELECT a la tabla de Cita
-            } catch (SQLException ex) {
-                throw ex; // enviar al siguiente método el error al ejecutar PreparedStatement en el caso que suceda
-            }
+    Cita cita = null;
+    ArrayList<Cita> citas = new ArrayList<>();
+    try (Connection conn = ComunDB.obtenerConexion()) {
+        String sql = obtenerSelect(pCita); // obtener la consulta SELECT de la tabla Cita
+        sql += " WHERE c.Id=?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, pCita.getId());
+            obtenerDatos(ps, citas);
         } catch (SQLException ex) {
-            throw ex; // enviar al siguiente método el error al obtener la conexión de la clase ComunDB en el caso que suceda
+            throw ex;
         }
-
-        if (citas.isEmpty()) { // verificar si el ArrayList de Cita trae al menos un registro
-            cita = citas.get(0); // Obtener el primer registro de la lista
-        }
-
-        return cita; // devolver la Cita encontrada por Id
+    } catch (SQLException ex) {
+        throw ex;
     }
+
+    if (!citas.isEmpty()) { // Corregir la verificación, debe ser si NO está vacío
+        cita = citas.get(0); // Obtener el primer registro de la lista
+    }
+
+    return cita;
+}
+
+
 
 // Metodo para obtener todos los registro de la tabla de cita
     public static ArrayList<Cita> obtenerTodos() throws Exception {
@@ -408,4 +408,16 @@ public static Cita obtenerPorId(Cita pCita) throws Exception {
         }
         return citas; // Devolver el ArrayList de Usuario
     }
+
+//    private static String obtenerSelect(Mascota pMascota) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
+
+//    private static boolean existeCita(Cita pCita) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
+
+//    private static boolean existeMascota(Cita pCita) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
 }
