@@ -18,6 +18,8 @@ public class Mascota {
     private String SenialesParticulares;
     private String Especie;
     private String Propietario;
+    private int Top_aux;
+    private Usuario usuario;
 
     public Mascota() {
     }
@@ -106,11 +108,22 @@ public class Mascota {
         this.Propietario = Propietario;
     }      
 
-    public static void setUsuario(Usuario get) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        public int getTop_aux() {
+        return Top_aux;
     }
 
+    public void setTop_aux(int Top_aux) {
+        this.Top_aux = Top_aux;
+    }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+        
+    }
 }
 
 
