@@ -1,8 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="sysseguridad.appweb.utils.*"%>
 <nav>
-    <div class="nav-wrapper blue">
-        <a href="Home" class="brand-logo">SysSeguridad</a>
+    <div class="nav-wrapper purple">
+        <a href="Home" class="brand-logo">MyPets</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>       
         <ul class="right hide-on-med-and-down">  
             <% if (SessionUser.isAuth(request)) {  %>
