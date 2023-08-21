@@ -5,11 +5,31 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="sysseguridad.entidadesdenegocio.Cita"%>
+<%@page import="sysseguridad.entidadesdenegocio.Mascota"%>
+<%@page import="java.util.ArrayList"%>
+<% ArrayList<Cita> citas = (ArrayList<Cita>) request.getAttribute("usuarios");
+    int numPage = 1;
+    int numReg = 10;
+    int countReg = 0;
+    if (citas == null) {
+        citas = new ArrayList();
+    } else if (citas.size() > numReg) {
+        double divNumPage = (double) citas.size() / (double) numReg;
+        numPage = (int) Math.ceil(divNumPage);
+    }
+    String strTop_aux = request.getParameter("top_aux");
+    int top_aux = 10;
+    if (strTop_aux != null && strTop_aux.trim().length() > 0) {
+        top_aux = Integer.parseInt(strTop_aux);
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <jsp:include page="/Views/Shared/title.jsp" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -18,6 +38,7 @@
 </head>
 
 <body>
+    <jsp:include page="/Views/Shared/headerBody.jsp" />
     <center>
         <h2>Historial de consultas</h2>
     </center>

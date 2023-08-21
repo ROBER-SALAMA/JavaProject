@@ -1,7 +1,7 @@
 <%-- 
     Document   : details
     Created on : 21 ago. 2023, 15:39:52
-    Author     : MINEDUCYT
+    Author     : Rober.salama
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

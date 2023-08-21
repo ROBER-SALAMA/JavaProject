@@ -1,7 +1,7 @@
 <%-- 
     Document   : delete
     Created on : 21 ago. 2023, 15:40:06
-    Author     : MINEDUCYT
+    Author     : Rober.salama
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
