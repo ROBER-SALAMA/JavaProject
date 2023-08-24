@@ -43,38 +43,28 @@ public class CitaDAL {
     
     //metodo para verificar si existe mascota
    private static boolean existeMAscota(Cita pCita) throws Exception {
-        boolean existe = false;
-        ArrayList<Cita> citas = new ArrayList<>();
-        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-            String sql = obtenerSelect(pCita);  // Obtener la consulta SELECT de la tabla Usuario
-            // Concatenar a la consulta SELECT de la tabla Usuario el WHERE y el filtro para saber si existe el login
-            sql += " WHERE u.Id<>? AND u.Login=?";
-            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
-                ps.setInt(1, pCita.getId());  // Agregar el parametros a la consulta donde estan el simbolo ? #1 
-                ps.setString(2, pCita.getPropietario());  // Agregar el parametros a la consulta donde estan el simbolo ? #2 
-                obtenerDatos(ps, citas); // Llenar el ArrayList de USuario con las fila que devolvera la consulta SELECT a la tabla de Usuario
-                ps.close(); // Cerrar el PreparedStatement
-            } catch (SQLException ex) {
-                throw ex;  // Enviar al siguiente metodo el error al ejecutar PreparedStatement el en el caso que suceda
-            }
-            conn.close(); // Cerrar la conexion a la base de datos
+    boolean existe = false;
+    ArrayList<Cita> citas = new ArrayList<>();
+    try (Connection conn = ComunDB.obtenerConexion();) {
+        String sql = obtenerSelect(pCita);  // Obtener la consulta SELECT de la tabla Usuario
+        // Concatenar a la consulta SELECT de la tabla Usuario el WHERE y el filtro para saber si existe el login
+        sql += " WHERE u.IdMascota=?"; // Corregir aquí para verificar por IdMascota
+        try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
+            ps.setInt(1, pCita.getIdMascota());  // Corregir aquí para obtener el IdMascota
+            obtenerDatos(ps, citas);
+        } catch (SQLException ex) {
+            throw ex;
         }
-        catch (SQLException ex) {
-            throw ex; // Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
-        }
-        if (citas.size() > 0) { // Verificar si el ArrayList de Usuario trae mas de un registro en tal caso solo debe de traer uno
-            Cita cita;
-             // Se solucciono tenia valor de 1 cuando debe de ser cero
-            cita = citas.get(0); // Si el ArrayList de Usuario trae un registro o mas obtenemos solo el primero 
-            if (cita.getId() > 0 && cita.getDiagnostico().equals(pCita.getIdMascota())) {
-                // Si el Id de Usuario es mayor a cero y el Login que se busco en la tabla de Usuario es igual al que solicitamos
-                // en los parametros significa que el login ya existe en la base de datos y devolvemos true en la variable "existe"
-                existe = true;
-            }
-        }
-        return existe; //Devolver la variable "existe" con el valor true o false si existe o no el Login en la tabla de Usuario de la base de datos
-
+    } catch (SQLException ex) {
+        throw ex;
     }
+
+    if (!citas.isEmpty()) { // Verificar si el ArrayList de Usuario trae más de un registro en tal caso solo debe de traer uno
+        existe = true;
+    }
+    return existe;
+}
+
   
     // Metodo para poder insertar un nuevo registro en la tabla de Usuario
     public static int crear(Cita pCita) throws Exception {
@@ -124,28 +114,7 @@ public class CitaDAL {
         }
     }
 
-    // Metodo para llenar las propiedades de la entidad de Usuario con los datos que viene en el ResultSet,
-    // el metodo nos ayudara a no preocuparlos por los indices al momento de obtener los valores del ResultSet
-//    static int asignarDatosResultSet(Cita pCita, ResultSet pResultSet, int pIndex) throws Exception {
-//        //  SELECT u.Id(indice 1), u.IdRol(indice 2), u.Nombre(indice 3), u.Apellido(indice 4), u.Login(indice 5), 
-//        // u.Estatus(indice 6), u.FechaRegistro(indice 7) * FROM Usuario
-//        pIndex++;
-//        pCita.setId(pResultSet.getInt(pIndex)); // index 1
-//        pIndex++;
-//        pCita.setIdRol(pResultSet.getInt(pIndex)); // index 2
-//        pIndex++;
-//        pCita.setNombre(pResultSet.getString(pIndex)); // index 3
-//        pIndex++;
-//        pCita.setApellido(pResultSet.getString(pIndex)); // index 4
-//        pIndex++;
-//        pCita.setLogin(pResultSet.getString(pIndex)); // index 5
-//        pIndex++;
-//        pCita.setEstatus(pResultSet.getByte(pIndex)); // index 6
-//        pIndex++;
-//        pCita.setFechaRegistro(pResultSet.getDate(pIndex).toLocalDate()); // index 7
-//        return pIndex;
-//    }
-
+    
     // Metodo para poder actualizar un registro en la tabla de cita
    // Metodo para poder actualizar un registro en la tabla de cita
 public static int modificar(Cita pCita) throws Exception {
@@ -315,26 +284,29 @@ public static Cita obtenerPorId(Cita pCita) throws Exception {
         }
     }
 
-    if (!pCita.getDiagnostico().trim().isEmpty()) {
-        pUtilQuery.AgregarWhereAnd("u.Diagnostico LIKE ?");
-        if (statement != null) {
-            statement.setString(pUtilQuery.getNumWhere(), "%" + pCita.getDiagnostico() + "%");
-        }
+    if (pCita.getDiagnostico() != null && !pCita.getDiagnostico().trim().isEmpty()) {
+    pUtilQuery.AgregarWhereAnd("u.Diagnostico LIKE ?");
+    if (statement != null) {
+        statement.setString(pUtilQuery.getNumWhere(), "%" + pCita.getDiagnostico() + "%");
     }
+}
 
-    if (!pCita.getDireccion().trim().isEmpty()) {
-        pUtilQuery.AgregarWhereAnd("u.Direccion LIKE ?");
-        if (statement != null) {
-            statement.setString(pUtilQuery.getNumWhere(), "%" + pCita.getDireccion() + "%");
-        }
-    }
 
-    if (!pCita.getFecha().trim().isEmpty()) {
-        pUtilQuery.AgregarWhereAnd("u.Fecha = ?");
-        if (statement != null) {
-            statement.setString(pUtilQuery.getNumWhere(), pCita.getFecha());
-        }
+    if (pCita.getDireccion() != null && !pCita.getDireccion().trim().isEmpty()) {
+    pUtilQuery.AgregarWhereAnd("u.Direccion LIKE ?");
+    if (statement != null) {
+        statement.setString(pUtilQuery.getNumWhere(), "%" + pCita.getDireccion() + "%");
     }
+}
+
+
+    if (pCita.getFecha() != null && !pCita.getFecha().trim().isEmpty()) {
+    pUtilQuery.AgregarWhereAnd("u.Fecha = ?");
+    if (statement != null) {
+        statement.setString(pUtilQuery.getNumWhere(), pCita.getFecha());
+    }
+}
+
 
     if (pCita.getEstatus() > 0) {
         pUtilQuery.AgregarWhereAnd("u.Estatus = ?");
