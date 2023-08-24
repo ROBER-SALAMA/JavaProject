@@ -126,25 +126,25 @@ public class CitaDAL {
 
     // Metodo para llenar las propiedades de la entidad de Usuario con los datos que viene en el ResultSet,
     // el metodo nos ayudara a no preocuparlos por los indices al momento de obtener los valores del ResultSet
-    static int asignarDatosResultSet(Usuario pUsuario, ResultSet pResultSet, int pIndex) throws Exception {
-        //  SELECT u.Id(indice 1), u.IdRol(indice 2), u.Nombre(indice 3), u.Apellido(indice 4), u.Login(indice 5), 
-        // u.Estatus(indice 6), u.FechaRegistro(indice 7) * FROM Usuario
-        pIndex++;
-        pUsuario.setId(pResultSet.getInt(pIndex)); // index 1
-        pIndex++;
-        pUsuario.setIdRol(pResultSet.getInt(pIndex)); // index 2
-        pIndex++;
-        pUsuario.setNombre(pResultSet.getString(pIndex)); // index 3
-        pIndex++;
-        pUsuario.setApellido(pResultSet.getString(pIndex)); // index 4
-        pIndex++;
-        pUsuario.setLogin(pResultSet.getString(pIndex)); // index 5
-        pIndex++;
-        pUsuario.setEstatus(pResultSet.getByte(pIndex)); // index 6
-        pIndex++;
-        pUsuario.setFechaRegistro(pResultSet.getDate(pIndex).toLocalDate()); // index 7
-        return pIndex;
-    }
+//    static int asignarDatosResultSet(Cita pCita, ResultSet pResultSet, int pIndex) throws Exception {
+//        //  SELECT u.Id(indice 1), u.IdRol(indice 2), u.Nombre(indice 3), u.Apellido(indice 4), u.Login(indice 5), 
+//        // u.Estatus(indice 6), u.FechaRegistro(indice 7) * FROM Usuario
+//        pIndex++;
+//        pCita.setId(pResultSet.getInt(pIndex)); // index 1
+//        pIndex++;
+//        pCita.setIdRol(pResultSet.getInt(pIndex)); // index 2
+//        pIndex++;
+//        pCita.setNombre(pResultSet.getString(pIndex)); // index 3
+//        pIndex++;
+//        pCita.setApellido(pResultSet.getString(pIndex)); // index 4
+//        pIndex++;
+//        pCita.setLogin(pResultSet.getString(pIndex)); // index 5
+//        pIndex++;
+//        pCita.setEstatus(pResultSet.getByte(pIndex)); // index 6
+//        pIndex++;
+//        pCita.setFechaRegistro(pResultSet.getDate(pIndex).toLocalDate()); // index 7
+//        return pIndex;
+//    }
 
     // Metodo para poder actualizar un registro en la tabla de cita
    // Metodo para poder actualizar un registro en la tabla de cita

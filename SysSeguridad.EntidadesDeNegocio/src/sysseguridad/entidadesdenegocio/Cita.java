@@ -108,9 +108,9 @@ public class Cita {
         this.top_aux = top_aux;
     }
     
-    private static void asignarDatosResultSet(Cita cita, ResultSet resultSet, int i) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+//    private static void asignarDatosResultSet(Cita cita, ResultSet resultSet, int i) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
     
     public Mascota getMascota() {
         return mascota;
@@ -127,7 +127,7 @@ public class Cita {
 //    public void setMascota(Mascota get) {
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 //    }
-//
+
 //    public void setMascota(Mascota get) {
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 //    }
