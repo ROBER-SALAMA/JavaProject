@@ -23,7 +23,7 @@ import sysseguridad.entidadesdenegocio.Usuario;
  *
  * @author jacqu
  */
-@WebServlet(name = "MascotaServlet", urlPatterns = {"/MascotaServlet"})
+@WebServlet(name = "MascotaServlet", urlPatterns = {"/Mascota"})
 public class MascotaServlet extends HttpServlet {
     
     private Mascota obtenerMascota(HttpServletRequest request){

@@ -58,8 +58,10 @@
                         <input  id="txtEspecie" type="text" name="especie">
                         <label for="txtEspecie">Especie</label>
                     </div>
-                    <div class="input-field col l4 s12">   
-                        
+                    <div class="input-field col l4 s12">
+                        <input  id="txtPropietario" type="text" name="propietario">
+                        <label for="txtPropietario">Propietario</label>
+                    </div>
                     <div class="input-field col l4 s12">   
                         <jsp:include page="/Views/Usuario/select.jsp">                           
                             <jsp:param name="id" value="0" />  
