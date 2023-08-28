@@ -38,7 +38,7 @@ public class MascotaServlet extends HttpServlet {
         mascota.setSenialesParticulares(Utilidad.getParameter(request, "senialesparticulares", accion));
         mascota.setEspecie(Utilidad.getParameter(request, "especie", accion));
         mascota.setPropietario(Utilidad.getParameter(request, "propietario", accion));
-        mascota.setIdUsuario(Integer.parseInt(Utilidad.getParameter(request, "IdUsuario", accion)));
+        mascota.setIdUsuario(Integer.parseInt(Utilidad.getParameter(request, "IdUsuario", "0")));
         return mascota;
     }
     
