@@ -262,7 +262,7 @@ public static ArrayList<Mascota> obtenerTodos() throws Exception {
             }
         }
         if (pMascota.getIdUsuario() > 0) {
-            pUtilQuery.AgregarWhereAnd(" m.IdUsuario=? ");
+            pUtilQuery.AgregarWhereAnd(" m.IdMascota=? ");
             if (statement != null) {
                 statement.setInt(pUtilQuery.getNumWhere(), pMascota.getIdUsuario());
             }

@@ -358,7 +358,7 @@ public static Cita obtenerPorId(Cita pCita) throws Exception {
             sql += ",";
             sql += RolDAL.obtenerCampos(); // Obtener los campos de la tabla de Rol que iran en el SELECT
             sql += " FROM Cita u";
-            sql += " JOIN Mascota r on (u.IdMascota=r.IdMascota)"; // agregar el join para unir la tabla de Usuario con Rol
+            sql += " JOIN Mascota r on (u.IdMascota=u.IdMascota)"; // agregar el join para unir la tabla de Usuario con Rol
             ComunDB comundb = new ComunDB();
             ComunDB.UtilQuery utilQuery = comundb.new UtilQuery(sql, null, 0);
             querySelect(pCita, utilQuery); // Asignar el filtro a la consulta SELECT de la tabla de Usuario 

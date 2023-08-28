@@ -5,7 +5,6 @@
 package sysseguridad.appweb.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,11 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import sysseguridad.accesoadatos.MascotaDAL;
 import sysseguridad.accesoadatos.CitaDAL;
-import sysseguridad.accesoadatos.UsuarioDAL;
+
 
 import sysseguridad.appweb.utils.*;
 import sysseguridad.entidadesdenegocio.Mascota;
-import sysseguridad.entidadesdenegocio.Usuario;
 import sysseguridad.entidadesdenegocio.Cita;
 
 
@@ -36,7 +34,7 @@ public class CitaServlet extends HttpServlet {
         cita.setPropietario(Utilidad.getParameter(request, "propietario", accion));
         cita.setTipoCita(Utilidad.getParameter(request, "tipocita", accion));
         cita.setIdMascota(Integer.parseInt(Utilidad.getParameter(request, "IdMascota", accion)));
-        cita.setIdUsuario(Integer.parseInt(Utilidad.getParameter(request, "IdUsuario", accion)));
+//        cita.setIdUsuario(Integer.parseInt(Utilidad.getParameter(request, "IdUsuario", accion)));
         cita.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
         if (accion.equals("index")) {
             cita.setTop_aux(Integer.parseInt(Utilidad.getParameter(request, "top_aux", "10")));
@@ -67,7 +65,7 @@ public class CitaServlet extends HttpServlet {
             
            
             request.setAttribute("citas", citas);
-           
+            
             request.setAttribute("top_aux", cita.getTop_aux());
             request.getRequestDispatcher("Views/Cita/index.jsp").forward(request, response); 
         } catch (Exception ex) {
