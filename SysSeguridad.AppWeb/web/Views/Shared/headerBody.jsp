@@ -10,7 +10,7 @@
             <li><a href="Usuario">Usuario</a></li>
             <li><a href="Rol">Rol</a></li>
             <li><a href="Cita">Cita</a></li>
-            <li><a href="Cita">Mascota</a></li>
+            <li><a href="Mascota">Mascota</a></li>
             <li><a href="Usuario?accion=cambiarpass">Cambiar password</a></li>
             <li><a href="Usuario?accion=login">Cerrar sesión</a></li>
             <%}%>
@@ -24,7 +24,7 @@
     <li><a href="Usuario">Usuario</a></li>
     <li><a href="Rol">Rol</a></li>
     <li><a href="Cita">Cita</a></li>
-    <li><a href="Cita">Mascota</a></li>
+    <li><a href="Mascota">Mascota</a></li>
     <li><a href="Usuario?accion=cambiarpass">Cambiar password</a></li>
     <li><a href="Usuario?accion=login">Cerrar sesión</a></li>
      <%}%>
