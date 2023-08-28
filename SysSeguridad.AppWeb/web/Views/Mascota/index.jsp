@@ -3,7 +3,7 @@
 <%@page import="sysseguridad.entidadesdenegocio.Mascota"%>
 <%@page import="java.util.ArrayList"%>
 
-<% ArrayList<Mascota> mascotas = (ArrayList<Mascota>) request.getAttribute("mascota");
+<% ArrayList<Mascota> mascotas = (ArrayList<Mascota>) request.getAttribute("mascotas");
     int numPage = 1;
     int numReg = 10;
     int countReg = 0;
