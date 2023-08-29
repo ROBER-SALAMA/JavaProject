@@ -5,8 +5,8 @@
     Author     : MINEDUCYT
 --%>
 
-
-<%@page import="sysseguridad.entidadesdenegocio.Usuario"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="sysseguridad.entidadesdenegocio.Mascota"%>
 <!DOCTYPE html>
 <html>
     <head>        
@@ -33,19 +33,19 @@
                         <label for="txtEdad">Edad</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtRaza" type="password" name="Raza" required class="validate" minlength="5" maxlength="32">
+                        <input  id="txtRaza" type="text" name="Raza" required class="validate" minlength="5" maxlength="32">
                         <label for="txtRaza">Raza</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtSeniales particulares" type="Seniales particulares" name="Seniales particulares" required class="validate" minlength="5" maxlength="32">
+                        <input  id="txtSeniales particulares" type="Text" name="Seniales particulares" required class="validate" minlength="5" maxlength="32">
                         <label for="txtSeniales particulares">Seniales particulares</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtEspecie" type="Especie" name="Especie" required class="validate" minlength="5" maxlength="32">
+                        <input  id="txtEspecie" type="text" name="Especie" required class="validate" minlength="5" maxlength="32">
                         <label for="txtEspecie">Especie</label>
                     </div>
                     <div class="input-field col l4 s12">
-                        <input  id="txtPropietario" type="Propietario" name="Propietario" required class="validate" minlength="5" maxlength="32">
+                        <input  id="txtPropietario" type="text" name="Propietario" required class="validate" minlength="5" maxlength="32">
                         <label for="txtEspecie">Propietario</label>
                     </div> 
                     
@@ -54,7 +54,7 @@
                 <div class="row">
                     <div class="col l12 s12">
                         <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">save</i>Guardar</button>
-                        <a href="Usuario" class="waves-effect waves-light btn blue"><i class="material-icons right">list</i>Cancelar</a>                          
+                        <a href="Mascota" class="waves-effect waves-light btn blue"><i class="material-icons right">list</i>Cancelar</a>                          
                     </div>
                 </div>
             </form>          

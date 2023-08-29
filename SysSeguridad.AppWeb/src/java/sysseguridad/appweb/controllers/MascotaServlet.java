@@ -38,7 +38,7 @@ public class MascotaServlet extends HttpServlet {
         mascota.setSenialesParticulares(Utilidad.getParameter(request, "senialesparticulares", accion));
         mascota.setEspecie(Utilidad.getParameter(request, "especie", accion));
         mascota.setPropietario(Utilidad.getParameter(request, "propietario", accion));
-        mascota.setIdUsuario(Integer.parseInt(Utilidad.getParameter(request, "IdUsuario", accion)));
+        mascota.setIdUsuario(Integer.parseInt(Utilidad.getParameter(request, "IdUsuario", "0")));
         return mascota;
     }
     
@@ -213,5 +213,44 @@ public class MascotaServlet extends HttpServlet {
             }
         });
     }
+     @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Utilizar el método authorize de la clase SessionUser para validar que solo usuario con permiso
+        // puedan acceder al servlet de Rol. Todo el codigo que este dentro  expresion Lambda,  se ejecutara si el usuario tiene permitido
+        // acceder a este Servlet 
+        SessionUser.authorize(request, response, () -> {
+            // Obtener el parámetro accion del request.
+            String accion = Utilidad.getParameter(request, "accion", "index");
+            // Hacer un switch para decidir a cual metodo ir segun el valor que venga en el parámetro de accion.
+            switch (accion) {
+                case "index":
+                    // Enviar el atributo accion al jsp de index.
+                    request.setAttribute("accion", accion);
+                    doPostRequestIndex(request, response); // Ir al metodo doGetRequestIndex.
+                    break;
+                case "create":
+                    // Enviar el atributo accion al jsp de create.
+                    request.setAttribute("accion", accion);
+                    doPostRequestCreate(request, response); // Ir al metodo doPostRequestCreate.
+                    break;
+                case "edit":
+                    // Enviar el atributo accion al jsp de edit.
+                    request.setAttribute("accion", accion);
+                    doPostRequestEdit(request, response); // Ir al metodo doPostRequestEdit.
+                    break;
+                case "delete":
+                    // Enviar el atributo accion al jsp de delete.
+                    request.setAttribute("accion", accion);
+                    doPostRequestDelete(request, response); // Ir al metodo doPostRequestDelete.
+                    break;
+                default:
+                    // Enviar el atributo accion al jsp de index.
+                    request.setAttribute("accion", accion);
+                    doGetRequestIndex(request, response); // Ir al metodo doGetRequestIndex.
+            }
+        });
+    }
 }
+
     
