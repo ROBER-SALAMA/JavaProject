@@ -140,6 +140,13 @@ public class Cita {
         this.estatus = estatus;
     }
     
+    public class EstatusCita {
+
+        public static final byte ACTIVO = 1;
+        public static final byte INACTIVO = 2;
+    }
+    
+    
     
 
 }
