@@ -30,14 +30,14 @@ public class MascotaServlet extends HttpServlet {
         String accion = Utilidad.getParameter(request, "accion", "index");
         Mascota mascota = new Mascota();
         
-        mascota.setNombre(Utilidad.getParameter(request, "nombre", accion));
-        mascota.setEdad(Utilidad.getParameter(request, "edad", accion));
-        mascota.setSexo(Utilidad.getParameter(request, "sexo", accion));
-        mascota.setEdad(Utilidad.getParameter(request, "edad", accion));
-        mascota.setRaza(Utilidad.getParameter(request, "raza", accion));
-        mascota.setSenialesParticulares(Utilidad.getParameter(request, "senialesparticulares", accion));
-        mascota.setEspecie(Utilidad.getParameter(request, "especie", accion));
-        mascota.setPropietario(Utilidad.getParameter(request, "propietario", accion));
+        mascota.setNombre(Utilidad.getParameter(request, "nombre", ""));
+        mascota.setEdad(Utilidad.getParameter(request, "edad", ""));
+        mascota.setSexo(Utilidad.getParameter(request, "sexo", ""));
+        mascota.setEdad(Utilidad.getParameter(request, "edad", ""));
+        mascota.setRaza(Utilidad.getParameter(request, "raza", ""));
+        mascota.setSenialesParticulares(Utilidad.getParameter(request, "senialesparticulares", ""));
+        mascota.setEspecie(Utilidad.getParameter(request, "especie", ""));
+        mascota.setPropietario(Utilidad.getParameter(request, "propietario", ""));
         mascota.setIdUsuario(Integer.parseInt(Utilidad.getParameter(request, "IdUsuario", "0")));
         return mascota;
     }
