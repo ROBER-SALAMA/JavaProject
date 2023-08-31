@@ -23,12 +23,20 @@ public class MascotaDAL {
     // Method to get the SELECT query for the Mascota table
     private static String obtenerSelect(Mascota pMascota) {
         String sql = "SELECT " + obtenerCampos() + " FROM Mascota m";
+        if (pMascota.getTop_aux() > 0 && ComunDB.TIPODB == ComunDB.TipoDB.SQLSERVER) {
+             
+            sql += "TOP " + pMascota.getTop_aux()+ " ";
+        }
+        sql += (obtenerCampos() + " FROM Mascota p");
         return sql;
     }
 
     // Method to add ORDER BY clause to the SELECT query for the Mascota table
     private static String agregarOrderBy(Mascota pMascota) {
         String sql = " ORDER BY m.Id DESC";
+         if (pMascota.getTop_aux() > 0 && ComunDB.TIPODB == ComunDB.TipoDB.MYSQL) {
+            sql += " LIMIT " + pMascota.getTop_aux() + " ";
+        }
         return sql;
     }
 
@@ -205,30 +213,30 @@ private static void obtenerDatos(PreparedStatement pPS, ArrayList<Mascota> pMasc
     
     public static Mascota obtenerPorId(Mascota pMascota) throws Exception {
     Mascota mascota = new Mascota();
-    ArrayList<Mascota> mascotas = new ArrayList<>();
+    ArrayList<Mascota> mascotas = new ArrayList();
     
     try (Connection conn = ComunDB.obtenerConexion();) {
-        String sql = obtenerSelect(pMascota); // Obtener la consulta SELECT de la tabla Mascota
+        String sql = obtenerSelect(pMascota); 
         sql += " WHERE m.Id=?";
         
         try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-            ps.setInt(1, pMascota.getId()); // Agregar el parámetro a la consulta donde está el símbolo ? #1 
-            obtenerDatos(ps, mascotas); // Llenar el ArrayList de Mascota con las filas que devuelve la consulta SELECT a la tabla de Mascota
-            ps.close(); // Cerrar el PreparedStatement
+            ps.setInt(1, pMascota.getId()); 
+            obtenerDatos(ps, mascotas); 
+            ps.close(); 
         } catch (SQLException ex) {
-            throw ex; // Enviar al siguiente método el error al ejecutar PreparedStatement en caso de que ocurra
+            throw ex; 
         }
         
-        conn.close(); // Cerrar la conexión a la base de datos
+        conn.close(); 
     } catch (SQLException ex) {
-        throw ex; // Enviar al siguiente método el error al obtener la conexión de la clase ComunDB en caso de que ocurra
+        throw ex; 
     }
     
-    if (!mascotas.isEmpty()) {
-        mascota = mascotas.get(0); // Si el ArrayList de Mascota trae un registro o más, obtenemos solo el primero
-    }
+    if (mascotas.size() > 0) { 
+        mascota = mascotas.get(0);
+    }     
     
-    return mascota; // Devolver la mascota encontrada por su ID
+    return mascota; 
 }
     
 public static ArrayList<Mascota> obtenerTodos() throws Exception {
@@ -362,17 +370,17 @@ public static ArrayList<Mascota> buscarIncluirUsuario(Mascota pMascota) throws E
             utilQuery.setStatement(ps);
             utilQuery.setSQL(null);
             utilQuery.setNumWhere(0);
-            querySelect(pMascota, utilQuery); // Asignar los parametros al PreparedStatement de la consulta SELECT de la tabla de Mascota
-            obtenerDatosIncluirUsuario(ps, mascotas); // Llenar el ArrayList de Mascota con las filas que devolvera la consulta SELECT a la tabla de Mascota
-            ps.close(); // Cerrar el PreparedStatement
+            querySelect(pMascota, utilQuery); 
+            obtenerDatosIncluirUsuario(ps, mascotas); 
+            ps.close(); 
         } catch (SQLException ex) {
-            throw ex; // Enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
+            throw ex; 
         }
-        conn.close(); // Cerrar la conexion a la base de datos
+        conn.close(); 
     } catch (SQLException ex) {
-        throw ex; // Enviar al siguiente metodo el error al obtener la conexion de la clase ComunDB en el caso que suceda
+        throw ex; 
     }
-    return mascotas; // Devolver el ArrayList de Mascotas
+    return mascotas; 
 }
 }
     

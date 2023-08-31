@@ -63,10 +63,10 @@
                         <label for="txtPropietario">Propietario</label>
                     </div>
                     <div class="input-field col l4 s12">   
-                       <%-- <jsp:include page="/Views/Mascota/select.jsp">                           
+                       <jsp:include page="/Views/Usuario/select.jsp">                           
                             <jsp:param name="id" value="0" />  
                         </jsp:include>                        
-                    </div>--%>
+                    </div>
                     <div class="input-field col l4 s12">   
                         <jsp:include page="/Views/Shared/selectTop.jsp">
                             <jsp:param name="top_aux" value="<%=top_aux%>" />                        
