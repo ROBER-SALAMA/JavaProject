@@ -8,12 +8,17 @@
 <%@page import="sysseguridad.entidadesdenegocio.Mascota"%>
 <%@page import="sysseguridad.accesoadatos.MascotaDAL"%>
 <%@page import="java.util.ArrayList"%>
-<% ArrayList<Mascota> roles = MascotaDAL.obtenerTodos();
-    int id = Integer.parseInt(request.getParameter("id"));
+<% ArrayList<Mascota> mascotas = MascotaDAL.obtenerTodos();
+    int id = 0; 
+    String idParam = request.getParameter("id");
+    if (idParam != null && !idParam.isEmpty()) {
+        id = Integer.parseInt(idParam);
+    }
+
 %>
-<select id="slRol" name="idRol">
+<select id="slMascota" name="idUsuario">
     <option <%=(id == 0) ? "selected" : ""%>  value="0">SELECCIONAR</option>
-    <% for (Mascota mascota : roles) {%>
+    <% for (Mascota mascota : mascotas) {%>
     <option <%=(id == mascota.getId()) ? "selected" : ""%>  value="<%=mascota.getId()%>"><%= mascota.getNombre()%></option>
     <%}%>
 </select>

@@ -28,12 +28,12 @@ public class CitaServlet extends HttpServlet {
         String accion = Utilidad.getParameter(request, "accion", "index");
         Cita cita = new Cita();
         
-        cita.setFecha(Utilidad.getParameter(request, "fecha", accion));
-        cita.setDiagnostico(Utilidad.getParameter(request, "diagnostico", accion));
-        cita.setDireccion(Utilidad.getParameter(request, "direccion", accion));
-        cita.setPropietario(Utilidad.getParameter(request, "propietario", accion));
-        cita.setTipoCita(Utilidad.getParameter(request, "tipocita", accion));
-        cita.setIdMascota(Integer.parseInt(Utilidad.getParameter(request, "IdMascota", accion)));
+        cita.setFecha(Utilidad.getParameter(request, "fecha", ""));
+        cita.setDiagnostico(Utilidad.getParameter(request, "diagnostico", ""));
+        cita.setDireccion(Utilidad.getParameter(request, "direccion", ""));
+        cita.setPropietario(Utilidad.getParameter(request, "propietario", ""));
+        cita.setTipoCita(Utilidad.getParameter(request, "tipocita", ""));
+        cita.setIdMascota(Integer.parseInt(Utilidad.getParameter(request, "IdMascota", "")));
 //        cita.setIdUsuario(Integer.parseInt(Utilidad.getParameter(request, "IdUsuario", accion)));
         cita.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
         if (accion.equals("index")) {
@@ -48,10 +48,10 @@ public class CitaServlet extends HttpServlet {
              
                 usuario.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
             }*/
-         /*else {
-           
+         else {
+            
             cita.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
-        }*/
+        }   
          
          return cita;
     }

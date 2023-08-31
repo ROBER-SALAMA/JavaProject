@@ -8,7 +8,7 @@
 <%@page import="sysseguridad.entidadesdenegocio.Cita"%>
 <%@page import="sysseguridad.entidadesdenegocio.Mascota"%>
 <%@page import="java.util.ArrayList"%>
-<% ArrayList<Cita> citas = (ArrayList<Cita>) request.getAttribute("usuarios");
+<% ArrayList<Cita> citas = (ArrayList<Cita>) request.getAttribute("citas");
     int numPage = 1;
     int numReg = 10;
     int countReg = 0;
@@ -24,7 +24,6 @@
         top_aux = Integer.parseInt(strTop_aux);
     }
 %>
-
 <!DOCTYPE html>
 <html>
     <head>        
@@ -35,7 +34,7 @@
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
-            <h5>Cita</h5>
+            <h5>Buscar cita</h5>
             <form action="Cita" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
                 <div class="row">
@@ -81,36 +80,35 @@
             <div class="row">
                 <div class="col l12 s12">
                     <div style="overflow: auto">
-                        <% for (Cita cita : citas) { %>
-  <div class="row">
-    <div class="col s12 m6">
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">Cita</span>
-          <p><strong>Fecha:</strong> <%= cita.getFecha() %></p>
-          <p><strong>Diagnóstico:</strong> <%= cita.getDiagnostico() %></p>
-          <p><strong>Dirección:</strong> <%= cita.getDireccion() %></p>
-          <p><strong>Propietario:</strong> <%= cita.getPropietario() %></p>
-          <p><strong>Tipo cita:</strong> <%= cita.getTipoCita() %></p>
-          <p><strong>Estatus:</strong> <%= cita.getEstatus() == 0 ? "ACTIVO" : "INACTIVO" %></p>
-          <p><strong>Mascota:</strong> <%= cita.getMascota() %></p>
-        </div>
-        <div class="card-action">
-          <a href="Cita?accion=edit&id=<%= cita.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
-            <i class="material-icons">edit</i> Modificar
-          </a>
-          <a href="Cita?accion=details&id=<%= cita.getId()%>" title="Ver" class="waves-effect waves-light btn blue">
-            <i class="material-icons">description</i> Ver
-          </a>
-          <a href="Cita?accion=delete&id=<%= cita.getId()%>" title="Eliminar" class="waves-effect waves-light btn red">
-            <i class="material-icons">delete</i> Eliminar
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-<% } %>
-
+                        <% for (Cita cita : citas) {%>
+                        <div class="row">
+                            <div class="col s12 m6">
+                                <div class="card">
+                                    <div class="card-content">
+                                        <span class="card-title">Cita</span>
+                                        <p><strong>Fecha:</strong> <%= cita.getFecha()%></p>
+                                        <p><strong>Diagnóstico:</strong> <%= cita.getDiagnostico()%></p>
+                                        <p><strong>Dirección:</strong> <%= cita.getDireccion()%></p>
+                                        <p><strong>Propietario:</strong> <%= cita.getPropietario()%></p>
+                                        <p><strong>Tipo cita:</strong> <%= cita.getTipoCita()%></p>
+                                        <p><strong>Estatus:</strong> <%= cita.getEstatus() == 0 ? "ACTIVO" : "INACTIVO"%></p>
+                                        <p><strong>Mascota:</strong> <%= cita.getMascota()%></p>
+                                    </div>
+                                    <div class="card-action">
+                                        <a href="Cita?accion=edit&id=<%= cita.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
+                                            <i class="material-icons">edit</i> Modificar
+                                        </a>
+                                        <a href="Cita?accion=details&id=<%= cita.getId()%>" title="Ver" class="waves-effect waves-light btn blue">
+                                            <i class="material-icons">description</i> Ver
+                                        </a>
+                                        <a href="Cita?accion=delete&id=<%= cita.getId()%>" title="Eliminar" class="waves-effect waves-light btn red">
+                                            <i class="material-icons">delete</i> Eliminar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% }%>
                     </div>                  
                 </div>
             </div>             

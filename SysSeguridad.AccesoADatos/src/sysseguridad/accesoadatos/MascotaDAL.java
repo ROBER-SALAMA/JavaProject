@@ -27,7 +27,7 @@ public class MascotaDAL {
              
             sql += "TOP " + pMascota.getTop_aux()+ " ";
         }
-        sql += (obtenerCampos() + " FROM Mascota p");
+//        sql += (obtenerCampos() + " FROM Mascota p");
         return sql;
     }
 
