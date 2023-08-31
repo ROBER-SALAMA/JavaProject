@@ -7,6 +7,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="sysseguridad.entidadesdenegocio.Mascota"%>
+<%@page import="sysseguridad.accesoadatos.UsuarioDAL"%>
+
 <!DOCTYPE html>
 <html>
     <head>        
@@ -48,6 +50,12 @@
                         <input  id="txtPropietario" type="text" name="Propietario" required class="validate" minlength="5" maxlength="32">
                         <label for="txtEspecie">Propietario</label>
                     </div> 
+                    <div class="input-field col l4 s12">   
+                        <jsp:include page="/Views/Usuario/select.jsp">                           
+                            <jsp:param name="id" value="0" />  
+                        </jsp:include>  
+                        <span id="slRol_error" style="color:red" class="helper-text"></span>
+                    </div>
                     
                 </div>
 

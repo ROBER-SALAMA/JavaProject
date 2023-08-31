@@ -22,12 +22,13 @@ public class MascotaDAL {
 
     // Method to get the SELECT query for the Mascota table
     private static String obtenerSelect(Mascota pMascota) {
-        String sql = "SELECT " + obtenerCampos() + " FROM Mascota m";
+        String sql; //= "SELECT"+ obtenerCampos() + " FROM Mascota m";
+        sql = "SELECT";
         if (pMascota.getTop_aux() > 0 && ComunDB.TIPODB == ComunDB.TipoDB.SQLSERVER) {
              
             sql += "TOP " + pMascota.getTop_aux()+ " ";
         }
-//        sql += (obtenerCampos() + " FROM Mascota p");
+        sql += (obtenerCampos() + " FROM Mascota m");
         return sql;
     }
 
