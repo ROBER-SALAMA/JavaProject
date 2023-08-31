@@ -213,7 +213,7 @@ private static void obtenerDatos(PreparedStatement pPS, ArrayList<Mascota> pMasc
     
     public static Mascota obtenerPorId(Mascota pMascota) throws Exception {
     Mascota mascota = new Mascota();
-    ArrayList<Mascota> mascotas = new ArrayList<>();
+    ArrayList<Mascota> mascotas = new ArrayList();
     
     try (Connection conn = ComunDB.obtenerConexion();) {
         String sql = obtenerSelect(pMascota); 
@@ -232,9 +232,9 @@ private static void obtenerDatos(PreparedStatement pPS, ArrayList<Mascota> pMasc
         throw ex; 
     }
     
-    if (!mascotas.isEmpty()) {
-        mascota = mascotas.get(0); 
-    }
+    if (mascotas.size() > 0) { 
+        mascota = mascotas.get(0);
+    }     
     
     return mascota; 
 }
