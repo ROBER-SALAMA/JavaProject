@@ -34,6 +34,7 @@ public class MascotaServlet extends HttpServlet {
         mascota.setEdad(Utilidad.getParameter(request, "edad", ""));
         mascota.setSexo(Utilidad.getParameter(request, "sexo", ""));
         mascota.setEdad(Utilidad.getParameter(request, "edad", ""));
+        //error
         mascota.setRaza(Utilidad.getParameter(request, "raza", ""));
         mascota.setSenialesParticulares(Utilidad.getParameter(request, "senialesparticulares", ""));
         mascota.setEspecie(Utilidad.getParameter(request, "especie", ""));

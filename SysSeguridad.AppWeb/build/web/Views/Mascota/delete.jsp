@@ -30,11 +30,11 @@
                     </div> 
                      <div class="input-field col l4 s12">
                         <input  id="txtRaza" type="text" value="<%=mascota.getRaza()%>" disabled>
-                        <label for="txtRaza">Raza/label>
+                        <label for="txtRaza">Raza</label>
                     </div>
                     <div class="input-field col l4 s12">
                         <input  id="txtSenialesParticulares" type="text" value="<%=mascota.getSenialesParticulares()%>" disabled>
-                        <label for="txtSenialesPaticulares">Seniales Particulares/label>
+                        <label for="txtSenialesPaticulares">Seniales Particulares</label>
                     </div>
                      <div class="input-field col l4 s12">
                         <input  id="txtEspecie" type="text" value="<%=mascota.getEspecie()%>" disabled>
@@ -53,7 +53,7 @@
                 <div class="row">
                     <div class="col l12 s12">
                         <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">delete</i>Eliminar</button>
-                        <a href="Mascota class="waves-effect waves-light btn blue"><i class="material-icons right">list</i>Cancelar</a>                          
+                        <a href="Mascota" class="waves-effect waves-light btn blue"><i class="material-icons right">list</i>Cancelar</a>                          
                     </div>
                 </div>
             </form>          
