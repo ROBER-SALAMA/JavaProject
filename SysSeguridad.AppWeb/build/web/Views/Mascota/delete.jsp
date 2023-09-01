@@ -1,10 +1,9 @@
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="sysseguridad.entidadesdenegocio.Mascota"%>
 <% Mascota mascota = (Mascota) request.getAttribute("mascota");%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
+    <head>        
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Eliminar Mascota</title>
     </head>
@@ -27,23 +26,24 @@
                     <div class="input-field col l4 s12">
                         <input  id="txtEdad" type="text" value="<%=mascota.getEdad()%>" disabled>
                         <label for="txtEdad">Edad</label>
-                    </div> 
-                     <div class="input-field col l4 s12">
+                    </div>
+                    <div class="input-field col l4 s12">
                         <input  id="txtRaza" type="text" value="<%=mascota.getRaza()%>" disabled>
                         <label for="txtRaza">Raza</label>
                     </div>
-                    <div class="input-field col l4 s12">
-                        <input  id="txtSenialesParticulares" type="text" value="<%=mascota.getSenialesParticulares()%>" disabled>
-                        <label for="txtSenialesPaticulares">Seniales Particulares</label>
-                    </div>
                      <div class="input-field col l4 s12">
+                        <input  id="txtSenialesParticulares" type="text" value="<%=mascota.getSenialesParticulares()%>" disabled>
+                        <label for="txtSenialesParticulares"> Seniales Particulares</label>
+                    </div>
+                    <div class="input-field col l4 s12">
                         <input  id="txtEspecie" type="text" value="<%=mascota.getEspecie()%>" disabled>
                         <label for="txtEspecie">Especie</label>
                     </div>
                    <div class="input-field col l4 s12">
                         <input  id="txtPropietario" type="text" value="<%=mascota.getPropietario()%>" disabled>
-                        <label for="txtPropietario">Propietario</label>
+                        <label for="txtPropietario">propietario</label>
                    </div>
+                        
                     
                     <div class="input-field col l4 s12">
                         <input id="txtUsuario" type="text" value="<%=mascota.getUsuario().getNombre()%>" disabled>
@@ -58,6 +58,7 @@
                 </div>
             </form>          
         </main>
-        <jsp:include page="/Views/Shared/footerBody.jsp" />
+        <jsp:include page="/Views/Shared/footerBody.jsp" />         
     </body>
 </html>
+

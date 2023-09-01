@@ -1,5 +1,5 @@
 <%@page import="sysseguridad.entidadesdenegocio.Mascota" %>
-<%Mascota mascota = (Mascota) request.getAttribute("Mascota");%>
+<%Mascota mascota = (Mascota) request.getAttribute("mascota");%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>

@@ -22,15 +22,14 @@ public class MascotaDAL {
 
     // Method to get the SELECT query for the Mascota table
     private static String obtenerSelect(Mascota pMascota) {
-        String sql; //= "SELECT"+ obtenerCampos() + " FROM Mascota m";
-        sql = "SELECT";
+        String sql = "SELECT ";
         if (pMascota.getTop_aux() > 0 && ComunDB.TIPODB == ComunDB.TipoDB.SQLSERVER) {
-             
-            sql += "TOP " + pMascota.getTop_aux()+ " ";
+            sql += "TOP " + pMascota.getTop_aux() + " ";
         }
-        sql += (obtenerCampos() + " FROM Mascota m");
+        sql += obtenerCampos() + " FROM Mascota m";
         return sql;
     }
+
 
     // Method to add ORDER BY clause to the SELECT query for the Mascota table
     private static String agregarOrderBy(Mascota pMascota) {
@@ -122,12 +121,13 @@ public class MascotaDAL {
                 throw ex;
             }
             conn.close();
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) {
             throw ex;
         }
-    } else {
-        result = 0;
-        throw new RuntimeException("Nombre de mascota ya existe");
+    } else{
+            result = 0;
+            throw new RuntimeException("Mascota ya existe"); // enviar una exception para notificar que el login existe
     }
     return result;
 }
