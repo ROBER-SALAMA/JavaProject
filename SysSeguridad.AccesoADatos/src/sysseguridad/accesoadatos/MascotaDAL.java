@@ -70,8 +70,8 @@ public class MascotaDAL {
     public static int crear(Mascota pMascota) throws Exception {
         int result;
         String sql;
-        boolean existe = existeNombre(pMascota);
-        if (!existe) {
+        
+        if (true) {
             try (Connection conn = ComunDB.obtenerConexion();) {
                 sql = "INSERT INTO Mascota(IdUsuario,Nombre,Sexo,Edad,Raza,SenialesParticulares,Especie,Propietario) VALUES(?,?,?,?,?,?,?,?)";
                 try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
@@ -102,8 +102,8 @@ public class MascotaDAL {
     public static int modificar(Mascota pMascota) throws Exception {
     int result;
     String sql;
-    boolean existe = existeNombre(pMascota); // Verificar si la mascota que se va a modificar ya existe en la base de datos
-    if (!existe) {
+     // Verificar si la mascota que se va a modificar ya existe en la base de datos
+    if (true) {
         try (Connection conn = ComunDB.obtenerConexion();) {
             sql = "UPDATE Mascota SET IdUsuario=?, Nombre=?, Sexo=?, Edad=?, Raza=?, SenialesParticulares=?, Especie=?, Propietario=? WHERE Id=?";
             try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {

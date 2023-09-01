@@ -27,34 +27,34 @@
                         <label for="txtNombre">Nombre</label>
                     </div>                       
                     <div class="input-field col l4 s12">
-                        <input  id="txtSexo" type="text" name="Sexo" required class="validate" maxlength="30">
+                        <input  id="txtSexo" type="text" name="sexo" required class="validate" maxlength="30">
                         <label for="txtSexo">Sexo</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtEdad" type="text" name="Edad" required class="validate" maxlength="25">
+                        <input  id="txtEdad" type="text" name="edad" required class="validate" maxlength="25">
                         <label for="txtEdad">Edad</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtRaza" type="text" name="Raza" required class="validate" minlength="5" maxlength="32">
+                        <input  id="txtRaza" type="text" name="raza" required class="validate" minlength="5" maxlength="32">
                         <label for="txtRaza">Raza</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtSeniales particulares" type="Text" name="Seniales particulares" required class="validate" minlength="5" maxlength="32">
+                        <input  id="txtSeniales particulares" type="Text" name="senialesparticulares" required class="validate" minlength="5" maxlength="32">
                         <label for="txtSeniales particulares">Seniales particulares</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtEspecie" type="text" name="Especie" required class="validate" minlength="5" maxlength="32">
+                        <input  id="txtEspecie" type="text" name="especie" required class="validate" minlength="5" maxlength="32">
                         <label for="txtEspecie">Especie</label>
                     </div>
                     <div class="input-field col l4 s12">
-                        <input  id="txtPropietario" type="text" name="Propietario" required class="validate" minlength="5" maxlength="32">
+                        <input  id="txtPropietario" type="text" name="propietario" required class="validate" minlength="5" maxlength="32">
                         <label for="txtEspecie">Propietario</label>
                     </div> 
                     <div class="input-field col l4 s12">   
                         <jsp:include page="/Views/Usuario/select.jsp">                           
                             <jsp:param name="id" value="0" />  
                         </jsp:include>  
-                        <span id="slRol_error" style="color:red" class="helper-text"></span>
+                        <span id="slUsuario_error" style="color:red" class="helper-text"></span>
                     </div>
                     
                 </div>
