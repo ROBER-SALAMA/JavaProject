@@ -89,7 +89,7 @@
                                 <tr>                                     
                                     <th>Nombre</th>  
                                     <th>Sexo</th> 
-                                    <th>Edaad</th>  
+                                    <th>Edad</th>  
                                     <th>Raza</th> 
                                     <th>Seniales Particulares</th>
                                     <th>Especie</th>

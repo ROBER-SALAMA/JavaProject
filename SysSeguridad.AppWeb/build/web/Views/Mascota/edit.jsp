@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="sysseguridad.entidadesdenegocio.Mascota"%>
-<% Mascota mascota = (Mascota) request.getAttribute("Mascota");%>
+<% Mascota mascota = (Mascota) request.getAttribute("mascota");%>
 <!DOCTYPE html>
 <html>
     <head>        
@@ -10,7 +10,7 @@
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
-            <h5>Editar Usuario</h5>
+            <h5>Editar Mascota</h5>
             <form action="Mascota" method="post" onsubmit="return  validarFormulario()">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
                 <input type="hidden" name="id" value="<%=mascota.getId()%>">  
@@ -20,27 +20,27 @@
                         <label for="txtNombre">Nombre</label>
                     </div>                       
                     <div class="input-field col l4 s12">
-                        <input  id="txtSexo" type="text" name="Sexo" value="<%=mascota.getSexo()%>" required class="validate" maxlength="30">
+                        <input  id="txtSexo" type="text" name="sexo" value="<%=mascota.getSexo()%>" required class="validate" maxlength="30">
                         <label for="txtSexo">Sexo</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtEdad" type="text" name="Edad" value="<%=mascota.getEdad()%>" required  class="validate" maxlength="25">
+                        <input  id="txtEdad" type="text" name="edad" value="<%=mascota.getEdad()%>" required  class="validate" maxlength="25">
                         <label for="txtEdad">Edad</label>
                     </div>                     
                     <div class="input-field col l4 s12">
-                        <input  id="txtRaza" type="text" name="Raza" value="<%=mascota.getRaza()%>" required  class="validate" maxlength="25">
+                        <input  id="txtRaza" type="text" name="raza" value="<%=mascota.getRaza()%>" required  class="validate" maxlength="25">
                         <label for="txtRaza">Raza</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtSenialesParticulares" type="text" name="SenialesParticulares" value="<%=mascota.getSenialesParticulares()%>" required  class="validate" maxlength="25">
+                        <input  id="txtsenialesparticulares" type="text" name="senialesparticulares" value="<%=mascota.getSenialesParticulares()%>" required  class="validate" maxlength="25">
                         <label for="txtSenialesParticulares">SenialesParticulares</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <input  id="txtEspecie" type="text" name="Especie" value="<%=mascota.getEspecie()%>" required  class="validate" maxlength="25">
+                        <input  id="txtEspecie" type="text" name="especie" value="<%=mascota.getEspecie()%>" required  class="validate" maxlength="25">
                         <label for="txtEspecie">Especie</label>
                     </div>
                     <div class="input-field col l4 s12">
-                        <input  id="txtPropietario" type="text" name="Propietario" value="<%=mascota.getPropietario()%>" required  class="validate" maxlength="25">
+                        <input  id="txtPropietario" type="text" name="propietario" value="<%=mascota.getPropietario()%>" required  class="validate" maxlength="25">
                         <label for="txtPropietario">Propietario</label>
                     </div>
                     <div class="input-field col l4 s12">   
